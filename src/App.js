@@ -11,39 +11,16 @@ import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
 import React, { useState } from 'react';
 import { ListGroup } from 'react-bootstrap';
+import { useCart } from './component/useCart';
 
 
 function ContainerExample() {
-  const [cartItems, setCartItems] = useState([]);
+  const { cartItems, handleBuyClick, handleQuantityChange, totalItemsInCart } = useCart();
   const [showCart, setShowCart] = useState(false);
-
-  const handleBuyClick = (item) => {
-    const existingItem = cartItems.find(cartItem => cartItem.name === item);
-
-    if (existingItem) {
-      setCartItems(cartItems.map(cartItem =>
-        cartItem.name === item ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
-      ));
-    } else {
-      setCartItems([...cartItems, { name: item, quantity: 1 }]);
-    }
-  };
-
-  const handleQuantityChange = (itemName, increment) => {
-    setCartItems(cartItems.map(item => {
-      if (item.name === itemName) {
-        const updatedQuantity = item.quantity + increment;
-        return { ...item, quantity: updatedQuantity > 0 ? updatedQuantity : 0 };
-      }
-      return item;
-    }).filter(item => item.quantity > 0));
-  };
 
   const handleCartToggle = () => {
     setShowCart(!showCart);
   };
-
-  const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <Container>
