@@ -1,0 +1,148 @@
+
+.card-hover {
+    transition: all 0.3s ease;
+    &:hover {
+      transform: scale(1.05); /* Increase card size */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+      transition: all 0.3s ease-in-out; /* Smooth transition */
+    }
+  }
+
+  .card {
+    margin-top: 20px;
+    width: 300px;
+    transition: all 0.3s ease;
+  
+    &:hover {
+      transform: translateY(-5px); /* Slight lift on hover */
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Hover shadow */
+    }
+  
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+  }
+  
+
+  .price-section {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    font-size: 1.1rem;
+  
+    .text-muted {
+      margin-right: 8px;
+      font-size: 1rem;
+    }
+  
+    .text-success {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+  }
+  
+ 
+  .badge {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.5rem;
+    border-radius: 8px;
+  }
+  
+
+  .btn-hover {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border-radius: 20px;
+  
+    &:hover {
+      background-color: #a77de0; /* Darker shade on hover */
+      color: #fff; /* White text on hover */
+      border-color: #483e3e; /* White border on hover */
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Increased shadow */
+      transform: translateY(-3px); /* Slightly move up on hover */
+    }
+  }
+  
+
+  .modal-content {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  
+  .modal-header {
+    background-color: #1a036e;
+    color: #fff;
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .modal-title {
+    font-weight: bold;
+    font-size: 24px;
+  }
+  
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  
+    .modal-image {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  }
+  
+
+  .cart-item-left {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+  }
+  
+  .cart-item-details {
+    text-align: left;
+    flex-grow: 1;
+  }
+  
+  .cart-item-total {
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  
+ 
+  .quantity-input {
+    width: 60px;
+    text-align: center;
+  }
+  
+
+  .modal-footer .btn-primary {
+    background-color: #17057e;
+    border-color: #07000a;
+    padding: 10px 30px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  
+    &:hover {
+      background-color: #894B9C;
+      border-color: #894B9C;
+    }
+  }
+  
+  .modal-footer .btn-secondary {
+    padding: 10px 30px;
+    border-radius: 20px;
+  }
+  
+
+  h5 {
+    font-weight: bold;
+  }

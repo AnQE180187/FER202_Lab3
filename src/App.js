@@ -1,180 +1,90 @@
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { Row } from 'react-bootstrap';
-import Image from 'react-bootstrap/Image';
-import Carousel from 'react-bootstrap/Carousel';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
-import Modal from 'react-bootstrap/Modal';
-import React, { useState } from 'react';
-import { ListGroup } from 'react-bootstrap';
-import { useCart } from './component/useCart';
+import React, { useState } from "react";
+import { Container, Row } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import "./styles/styles.css";
 
+import Header from "./component/Header";
+import CarouselItem from "./component/Carousel";
+import CardList from "./component/CardList";
+import CartModal from "./component/CartModal"; 
 
-function ContainerExample() {
-  const { cartItems, handleBuyClick, handleQuantityChange, totalItemsInCart } = useCart();
-  const [showCart, setShowCart] = useState(false);
+const App = () => {
+  const [showCart, setShowCart] = useState(false); // Cart modal state
+  const [cart, setCart] = useState([]); // Cart state
+  const [count, setCount] = useState(0); // Cart item count
 
-  const handleCartToggle = () => {
-    setShowCart(!showCart);
+ 
+  const handleShowCartModal = () => {
+    setShowCart(true); // Show the cart modal
+  };
+
+  
+  const handleCloseCart = () => setShowCart(false);
+
+ 
+  const handleAddToCart = (item, quantity) => {
+   
+    const existingItem = cart.find((cartItem) => cartItem.title === item.title);
+
+    if (existingItem) {
+      
+      const updatedCart = cart.map((cartItem) =>
+        cartItem.title === item.title
+          ? { ...cartItem, quantity: cartItem.quantity + quantity }
+          : cartItem
+      );
+      setCart(updatedCart);
+    } else {
+   
+      const newItem = { ...item, quantity };
+      setCart([...cart, newItem]);
+    }
+
+   
+    setCount((prevCount) => prevCount + quantity);
+  };
+
+ 
+  const updateCart = (index, newQuantity) => {
+    const updatedCart = [...cart];
+    if (newQuantity === 0) {
+      updatedCart.splice(index, 1); 
+    } else {
+      updatedCart[index].quantity = newQuantity; 
+    }
+    setCart(updatedCart);
+
+    
+    const newCount = updatedCart.reduce((acc, item) => acc + item.quantity, 0);
+    setCount(newCount);
   };
 
   return (
     <Container>
-      <Row>
-        <Navbar expand="lg" className="bg-body-tertiary">
-          <Container fluid>
-            <Navbar.Brand href="#">PizzaHouse</Navbar.Brand>
-            <Navbar.Toggle aria-controls="navbarScroll" />
-            <Navbar.Collapse id="navbarScroll">
-              <Nav
-                className="me-auto my-2 my-lg-0"
-                style={{ maxHeight: '100px' }}
-                navbarScroll
-              >
-                <Nav.Link href="#action1">Home</Nav.Link>
-                <Nav.Link href="#action2">About Us</Nav.Link>
-                <Nav.Link href="#action2">Contact</Nav.Link>
+      
+      <Header handleShow={handleShowCartModal} count={count} />
+      
+      
+      <CarouselItem />
 
-              </Nav>
-              <Form className="d-flex">
+      
+      <Row className="justify-content-center">
+        <CardList
+          apiUrl="https://api-demo-4gqb.onrender.com/products&#39"
+          handleAddToCart={handleAddToCart}
+        />
+      </Row>
 
-                <Button variant="primary" onClick={handleCartToggle}>Item: {totalItemsInCart}
-                </Button>
-                <Modal show={showCart} onHide={handleCartToggle}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Using Grid in Modal</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    {cartItems.length === 0 ? (
-                      <p>No item, please add some.</p>
-                    ) : (
-                      <ListGroup>
-                        {cartItems.map((item) => (
-                          <ListGroup.Item key={item.name}>
-                            <Row>
-                              <Col xs={3}>{item.name}</Col>
-                              <Col xs={3}>{item.quantity}</Col>
-                              <Col xs={3}>
-                                <Button
-                                  variant="primary"
-                                  size="sm"
-                                  onClick={() => handleQuantityChange(item.name, 1)}
-                                >
-                                  +
-                                </Button>{' '}
-                              </Col>
-                              <Col xs={3}>           
-                                <Button
-                                  variant="danger"
-                                  size="sm"
-                                  onClick={() => handleQuantityChange(item.name, -1)}
-                                >
-                                  -
-                                </Button>
-                              </Col>
-                            </Row>
-                          </ListGroup.Item>
-                        ))}
-                      </ListGroup>
-                    )}
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="primary" onClick={handleCartToggle}>
-                      Close
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
-              </Form>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      </Row>
-      <Row>
-        <Carousel>
-          <Carousel.Item>
-            <Image src="./Images/pizza1.jpg" />
-            <Carousel.Caption>
-              <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <Image src="./Images/pizza2.jpg" />
-            <Carousel.Caption>
-              <h3>Second slide label</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <Image src="./Images/pizza3.jpg" />
-            <Carousel.Caption>
-              <h3>Third slide label</h3>
-              <p>
-                Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-              </p>
-            </Carousel.Caption>
-          </Carousel.Item>
-        </Carousel>
-      </Row>
-      <Row className='mt-3'>
-        <Col card1>
-          <Card style={{ width: 'auto' }}>
-            <Card.Img variant="top" src="./Images/menu1.jpg" />
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-              <Button onClick={() => handleBuyClick('Card title 1')} variant="primary">Buy</Button>
-            </Card.Body>
-          </Card></Col>
-        <Col card2>
-          <Card style={{ width: 'auto' }}>
-            <Card.Img variant="top" src="./Images/menu2.jpg" />
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-              <Button onClick={() => handleBuyClick('Card title 2')} variant="primary">Buy</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col card3>
-          <Card style={{ width: 'auto' }}>
-            <Card.Img variant="top" src="./Images/menu3.jpg" />
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-              <Button onClick={() => handleBuyClick('Card title 3')} variant="primary">Buy</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col card4>
-          <Card style={{ width: 'auto' }}>
-            <Card.Img variant="top" src="./Images/menu4.jpg" />
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-              <Button onClick={() => handleBuyClick('Card title 4')} variant="primary">Buy</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+      
+      <CartModal
+        show={showCart}
+        handleClose={handleCloseCart}
+        cart={cart} 
+        updateCart={updateCart} 
+      />
     </Container>
   );
-}
+};
 
-export default ContainerExample;
+export default App;
