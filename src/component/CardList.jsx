@@ -62,16 +62,7 @@ const CardItem = ({
 const CardList = ({ handleAddToCart }) => {
   const [products, setProducts] = useState(data);
 
-  const loadData = async () => {
-    const res = await fetch("https://api-demo-4gqb.onrender.com/products");
-    const data = await res.json();
-    console.log(data);
-    setProducts(data.data);
-  };
-
-  useEffect(() => {
-    loadData();
-  }, []);
+   
   return (
     <Row className="justify-content-center mt-4">
       {products?.map((item) => (
