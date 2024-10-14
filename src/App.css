@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  background-color: black;
+}
+.Container {
+  background-color: black;
 }
 
 .App-logo {
@@ -21,7 +25,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: rgb(20, 168, 194);
 }
 
 .App-link {

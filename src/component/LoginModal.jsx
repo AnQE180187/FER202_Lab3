@@ -82,10 +82,11 @@ const LoginModal = ({ show, handleClose }) => {
               required
             />
           </Form.Group>
-
-          <Form.Text className="text-muted">
+{/* 
+         <Form.Text className="text-muted">
             <a href="#forgot-password">Forgot Password?</a>
           </Form.Text>
+           */}
         </Form>
       </Modal.Body>
       <Modal.Footer className="d-flex align-items-center">
